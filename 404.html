@@ -11,48 +11,45 @@
     <meta name="robots" content="noindex, follow" />
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="theme-color" content="#6366f1" />
+    <meta name="theme-color" content="#00b8c9" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
         theme: {
           extend: {
-            colors: { accent: "#6366f1" },
+            colors: { accent: "#00b8c9", paper: "#ffffff", ink: "#12161c" },
+            fontFamily: {
+              display: ["Syne", "sans-serif"],
+              body: ["Outfit", "sans-serif"],
+            },
           },
         },
       };
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@700&family=DM+Sans:wght@400;500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500&family=Syne:wght@700;800&display=swap"
       rel="stylesheet"
     />
     <style>
       body {
-        font-family: "DM Sans", sans-serif;
+        font-family: Outfit, sans-serif;
       }
       h1 {
-        font-family: "PT Sans", sans-serif;
+        font-family: Syne, sans-serif;
       }
     </style>
   </head>
-  <body
-    class="min-h-screen bg-zinc-950 text-zinc-100 flex items-center justify-center px-6"
-  >
+  <body class="min-h-screen bg-ink text-paper flex items-center justify-center px-6">
     <main class="max-w-lg text-center">
-      <p class="text-sm font-medium tracking-widest uppercase text-accent mb-4">
-        404
-      </p>
-      <h1 class="text-4xl sm:text-5xl font-bold mb-4">Page not found</h1>
-      <p class="text-zinc-400 leading-relaxed mb-8">
-        The page you are looking for is not on
-        <strong class="text-zinc-200">by-kimhy.site</strong>. Head back to the
-        portfolio to see Kimhy’s work and contact details.
+      <p class="text-xs tracking-[0.28em] uppercase text-accent mb-4">404</p>
+      <h1 class="text-4xl sm:text-5xl font-extrabold mb-4">Page not found</h1>
+      <p class="text-paper/60 leading-relaxed mb-8">
+        That URL is not on by-kimhy.site. Head back to the portfolio.
       </p>
       <a
         href="/"
-        class="inline-flex items-center gap-2 bg-accent text-white text-sm font-medium px-5 py-2.5 rounded-full hover:bg-indigo-500 transition-colors"
+        class="inline-flex bg-accent text-ink text-sm font-medium px-5 py-2.5 rounded-xl hover:bg-cyan-300 transition-colors"
       >
         Back to portfolio
       </a>

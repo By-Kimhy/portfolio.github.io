@@ -2,11 +2,36 @@ tailwind.config = {
   darkMode: 'class',
   theme: {
     extend: {
-      fontFamily: { display: ['PT Sans', 'sans-serif'], body: ['DM Sans', 'sans-serif'] },
-      colors: { accent: '#6366f1', 'accent-light': '#00d4ff', 'accent-dark': '#00d4ff' }
+      fontFamily: {
+        display: ['Syne', 'sans-serif'],
+        body: ['Outfit', 'sans-serif'],
+        mono: ['IBM Plex Mono', 'monospace'],
+      },
+      colors: {
+        accent: '#00b8c9',
+        'accent-light': '#5ee4f0',
+        'accent-dark': '#087f8c',
+        paper: '#ffffff',
+        ink: '#12161c',
+      }
     }
   }
 }
+
+const LANG_FILES = {
+  en: "javaScript/lang/en.js",
+  kh: "javaScript/lang/kh.js",
+  cn: "javaScript/lang/cn.js",
+};
+
+const CERT_FILES = [
+  { id: "step", src: "img/certificate/itstep.jpg", year: "2025" },
+  { id: "intro", src: "img/certificate/intro%20cyber.jpg", year: "2025" },
+  { id: "threat", src: "img/certificate/cyber%20threat%20management.jpg", year: "2025" },
+  { id: "endpoint", src: "img/certificate/end%20point.jpg", year: "2025" },
+  { id: "hsk", src: "img/certificate/hsk6.jpg", year: "2020" },
+  { id: "samsung", src: "img/certificate/samsung.jpg", year: "2016" },
+];
 
 function app() {
   return {
@@ -14,8 +39,106 @@ function app() {
     mm: false,
     sc: false,
     s: "hero",
+    cert: null,
+    lang: "en",
+    dict: {},
+    langs: [
+      { id: "kh", code: "KH", label: "Khmer" },
+      { id: "en", code: "EN", label: "English" },
+      { id: "cn", code: "中", label: "Chinese" },
+    ],
+    certs: [],
 
-    init() {
+    t(key) {
+      const parts = key.split(".");
+      const read = (pack) => parts.reduce((cur, part) => cur?.[part], pack);
+      return read(this.dict) ?? read(window.LANG_PACKS?.en) ?? key;
+    },
+
+    htmlLang() {
+      return { en: "en", kh: "km", cn: "zh-CN" }[this.lang] || "en";
+    },
+
+    buildCerts() {
+      const pack = this.dict.certs || {};
+      const fallback = window.LANG_PACKS?.en?.certs || {};
+      return CERT_FILES.map((file) => ({
+        ...file,
+        ...(fallback[file.id] || {}),
+        ...(pack[file.id] || {}),
+      }));
+    },
+
+    async loadLang(code) {
+      window.LANG_PACKS = window.LANG_PACKS || {};
+      if (window.LANG_PACKS[code]) return window.LANG_PACKS[code];
+      await new Promise((resolve, reject) => {
+        const script = document.createElement("script");
+        script.src = LANG_FILES[code];
+        script.onload = resolve;
+        script.onerror = () => reject(new Error("Failed to load " + code));
+        document.head.appendChild(script);
+      });
+      return window.LANG_PACKS[code];
+    },
+
+    diploma() {
+      return {
+        title: this.t("edu.bachelor"),
+        issuer: "SETEC Institute",
+        year: "2025",
+        src: "img/certificate/it bachelor.jpg",
+        alt: this.t("edu.diplomaAlt"),
+      };
+    },
+
+    transcript() {
+      return {
+        title: this.t("edu.viewTranscript"),
+        issuer: "SETEC Institute",
+        year: "2025",
+        src: "img/certificate/setec transcript.jpg",
+        alt: this.t("edu.transcriptAlt"),
+      };
+    },
+
+    async setLang(code) {
+      if (!LANG_FILES[code]) return;
+      const pack = await this.loadLang(code);
+      if (!pack) return;
+      this.lang = code;
+      this.dict = pack;
+      localStorage.setItem("lang", code);
+      document.documentElement.lang = this.htmlLang();
+      document.documentElement.dataset.lang = code;
+      this.certs = this.buildCerts();
+      const url = new URL(location.href);
+      if (code === "en") url.searchParams.delete("lang");
+      else url.searchParams.set("lang", code);
+      history.replaceState(null, "", url);
+    },
+
+    openCert(cert) {
+      this.cert = cert;
+    },
+
+    closeCert() {
+      this.cert = null;
+    },
+
+    async init() {
+      const aliases = { km: "kh", zh: "cn", "zh-cn": "cn" };
+      const query = new URLSearchParams(location.search).get("lang");
+      const saved = localStorage.getItem("lang");
+      const start = LANG_FILES[query]
+        ? query
+        : LANG_FILES[aliases[query]]
+          ? aliases[query]
+          : LANG_FILES[saved]
+            ? saved
+            : "en";
+      await this.setLang(start);
+
       // dark mode
       this.dark =
         localStorage.getItem("theme") === "dark" ||
@@ -24,6 +147,12 @@ function app() {
       this.$watch("dark", (v) =>
         localStorage.setItem("theme", v ? "dark" : "light"),
       );
+      this.$watch("cert", (v) => {
+        document.body.style.overflow = v ? "hidden" : "";
+      });
+      window.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") this.closeCert();
+      });
 
       // scroll
       window.addEventListener(
@@ -47,9 +176,13 @@ function app() {
         },
         { threshold: 0.1, rootMargin: "0px 0px -40px 0px" },
       );
-      document
-        .querySelectorAll(".reveal")
-        .forEach((el) => io.observe(el));
+      const watchReveal = () => {
+        document.querySelectorAll(".reveal:not(.in)").forEach((el) => {
+          io.observe(el);
+        });
+      };
+      watchReveal();
+      this.$nextTick(watchReveal);
 
       // year
       document.getElementById("yr").textContent =
@@ -68,8 +201,8 @@ function app() {
         "contact",
         "blog",
         "reviews",
+        "education",
         "about",
-        "work",
         "services",
         "hero",
       ];
@@ -82,14 +215,4 @@ function app() {
       }
     },
   };
-}
-
-
-function openModal(id) {
-  document.getElementById(id).classList.remove('hidden');
-  document.getElementById(id).classList.add('flex');
-}
-function closeModal(id) {
-  document.getElementById(id).classList.add('hidden');
-  document.getElementById(id).classList.remove('flex');
 }
