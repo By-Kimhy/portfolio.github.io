@@ -26,7 +26,7 @@ window.LANG_PACKS.en = {
     "stat3": "Learning",
     "stat3sub": "Full-stack",
     "open": "Open to projects",
-    "openSub": "Junior roles",
+    "openSub": "Junior Developer",
     "photoAlt": "By Kimhy, full stack developer based in Cambodia"
   },
   "skills": {

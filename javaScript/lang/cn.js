@@ -26,7 +26,7 @@ window.LANG_PACKS.cn = {
     "stat3": "学习中",
     "stat3sub": "全栈",
     "open": "接受项目",
-    "openSub": "初级岗位",
+    "openSub": "初级开发者",
     "photoAlt": "By Kimhy，柬埔寨全栈开发者"
   },
   "skills": {

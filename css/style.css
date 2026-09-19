@@ -1,6 +1,6 @@
 *,*::before,*::after{box-sizing:border-box}
 html,body{font-family:'Outfit',sans-serif}
-h1,h2,h3,h4,h5,h6{font-family:'Syne',sans-serif}
+h1,h2,h3,h4,h5,h6{font-family:'Playfair Display',serif}
 body{transition:background-color .35s,color .35s}
 
 body::before{
@@ -59,11 +59,16 @@ body::after{
   background:linear-gradient(145deg,#5ee4f0 0%,#00b8c9 48%,#087f8c 100%);
 }
 
+html[lang="en"] h1,html[lang="en"] h2{
+  font-family:'Playfair Display',serif!important;
+  font-weight:600!important;
+  font-style:italic!important;
+}
 html[lang="km"] body,html[lang="km"]{font-family:'Kantumruy Pro',Outfit,sans-serif}
-html[lang="km"] h1,html[lang="km"] h2,html[lang="km"] h3,html[lang="km"] h4,html[lang="km"] h5,html[lang="km"] h6{font-family:'Kantumruy Pro',Syne,sans-serif}
+html[lang="km"] h1,html[lang="km"] h2,html[lang="km"] h3,html[lang="km"] h4,html[lang="km"] h5,html[lang="km"] h6{font-family:'Kantumruy Pro','Playfair Display',serif}
 html[lang="zh-CN"] body,html[lang="zh"] body,html[lang="zh-CN"],html[lang="zh"]{font-family:'Noto Sans SC',Outfit,sans-serif}
 html[lang="zh-CN"] h1,html[lang="zh-CN"] h2,html[lang="zh-CN"] h3,html[lang="zh-CN"] h4,html[lang="zh-CN"] h5,html[lang="zh-CN"] h6,
-html[lang="zh"] h1,html[lang="zh"] h2,html[lang="zh"] h3,html[lang="zh"] h4,html[lang="zh"] h5,html[lang="zh"] h6{font-family:'Noto Sans SC',Syne,sans-serif}
+html[lang="zh"] h1,html[lang="zh"] h2,html[lang="zh"] h3,html[lang="zh"] h4,html[lang="zh"] h5,html[lang="zh"] h6{font-family:'Noto Sans SC','Playfair Display',serif}
 
 .lang-switch{
   display:flex;

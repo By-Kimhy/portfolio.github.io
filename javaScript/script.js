@@ -3,7 +3,7 @@ tailwind.config = {
   theme: {
     extend: {
       fontFamily: {
-        display: ['Syne', 'sans-serif'],
+        display: ['Playfair Display', 'serif'],
         body: ['Outfit', 'sans-serif'],
         mono: ['IBM Plex Mono', 'monospace'],
       },

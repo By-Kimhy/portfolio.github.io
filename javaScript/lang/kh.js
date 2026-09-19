@@ -26,7 +26,7 @@ window.LANG_PACKS.kh = {
     "stat3": "កំពុងរៀន",
     "stat3sub": "Full-stack",
     "open": "បើកទទួលគម្រោង",
-    "openSub": "តួនាទី Junior",
+    "openSub": "Junior Developer",
     "photoAlt": "ប៊ី គីមហ៊ី អ្នកអភិវឌ្ឍន៍ full stack នៅកម្ពុជា"
   },
   "skills": {
