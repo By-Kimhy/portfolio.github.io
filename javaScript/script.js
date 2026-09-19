@@ -43,7 +43,7 @@ function app() {
     lang: "en",
     dict: {},
     langs: [
-      { id: "kh", code: "KH", label: "Khmer" },
+      { id: "kh", code: "ខ្មែរ", label: "Khmer" },
       { id: "en", code: "EN", label: "English" },
       { id: "cn", code: "中", label: "Chinese" },
     ],
