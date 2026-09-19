@@ -144,9 +144,11 @@ function app() {
         localStorage.getItem("theme") === "dark" ||
         (!localStorage.getItem("theme") &&
           window.matchMedia("(prefers-color-scheme: dark)").matches);
-      this.$watch("dark", (v) =>
-        localStorage.setItem("theme", v ? "dark" : "light"),
-      );
+      this.$watch("dark", (v) => {
+        localStorage.setItem("theme", v ? "dark" : "light");
+        startParticles(v);
+      });
+      this.$nextTick(() => startParticles(this.dark));
       this.$watch("cert", (v) => {
         document.body.style.overflow = v ? "hidden" : "";
       });

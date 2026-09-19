@@ -3,6 +3,17 @@ html,body{font-family:'Outfit',sans-serif}
 h1,h2,h3,h4,h5,h6{font-family:'Playfair Display',serif}
 body{transition:background-color .35s,color .35s}
 
+#particles-js{
+  position:fixed;
+  inset:0;
+  z-index:1;
+  pointer-events:none;
+}
+#particles-js canvas{display:block}
+@media (prefers-reduced-motion:reduce){
+  #particles-js{display:none}
+}
+
 body::before{
   content:'';
   position:fixed;
@@ -83,6 +94,15 @@ html[lang="zh"] h1,html[lang="zh"] h2,html[lang="zh"] h3,html[lang="zh"] h4,html
   background:rgba(255,255,255,.1);
   border-color:rgba(255,255,255,.08);
 }
+.lang-switch--full{
+  width:100%;
+}
+.lang-switch--full .lang-opt{
+  flex:1;
+}
+.lang-switch--full .lang-opt.is-on{
+  min-width:0;
+}
 .lang-opt{
   display:flex;
   align-items:center;
@@ -98,7 +118,7 @@ html[lang="zh"] h1,html[lang="zh"] h2,html[lang="zh"] h3,html[lang="zh"] h4,html
   transition:background .2s ease,min-width .2s ease,padding .2s ease,opacity .2s ease;
 }
 .lang-opt.is-on{
-  background:#1b2a6b;
+  background:#00b8c9;
   min-width:72px;
   padding:0 12px 0 8px;
 }

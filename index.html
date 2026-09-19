@@ -162,6 +162,7 @@
   <body
     class="bg-paper dark:bg-ink text-ink dark:text-paper antialiased relative"
   >
+    <div id="particles-js" aria-hidden="true"></div>
     <header class="fixed inset-x-0 top-0 z-50 px-4 pt-4">
       <nav
         class="max-w-6xl mx-auto h-16 px-4 sm:px-5 flex items-center justify-between rounded-2xl border border-ink/10 dark:border-white/10 bg-paper/80 dark:bg-ink/80 backdrop-blur-xl transition-shadow"
@@ -200,28 +201,30 @@
         </ul>
 
         <div class="flex items-center gap-2">
-          <div class="lang-switch" role="group" :aria-label="t('nav.lang')">
-            <template x-for="item in langs" :key="item.id">
-              <button
-                type="button"
-                class="lang-opt"
-                :class="lang===item.id ? 'is-on' : ''"
-                @click="setLang(item.id)"
-                :aria-pressed="lang===item.id"
-                :aria-label="item.label"
-              >
-                <span
-                  class="lang-flag"
-                  :data-flag="item.id"
-                  aria-hidden="true"
-                ></span>
-                <span
-                  class="lang-code"
-                  x-show="lang===item.id"
-                  x-text="item.code"
-                ></span>
-              </button>
-            </template>
+          <div class="hidden md:block">
+            <div class="lang-switch" role="group" :aria-label="t('nav.lang')">
+              <template x-for="item in langs" :key="'nav-'+item.id">
+                <button
+                  type="button"
+                  class="lang-opt"
+                  :class="lang===item.id ? 'is-on' : ''"
+                  @click="setLang(item.id)"
+                  :aria-pressed="lang===item.id"
+                  :aria-label="item.label"
+                >
+                  <span
+                    class="lang-flag"
+                    :data-flag="item.id"
+                    aria-hidden="true"
+                  ></span>
+                  <span
+                    class="lang-code"
+                    x-show="lang===item.id"
+                    x-text="item.code"
+                  ></span>
+                </button>
+              </template>
+            </div>
           </div>
           <button
             @click="dark=!dark"
@@ -261,7 +264,7 @@
           </button>
           <a
             href="#contact"
-            class="hidden md:inline-flex items-center gap-2 shimmer bg-accent text-ink text-sm font-medium px-4 py-2 rounded-xl hover:bg-accent-dark hover:text-white transition-colors"
+            class="hidden md:inline-flex items-center gap-2 shimmer bg-accent text-white text-sm font-medium px-4 py-2 rounded-xl hover:bg-accent-dark hover:text-white transition-colors"
             x-text="t('nav.contact')"
           ></a>
           <button
@@ -310,7 +313,7 @@
         x-transition
         class="md:hidden max-w-6xl mx-auto mt-2 rounded-2xl border border-ink/10 dark:border-white/10 bg-paper/95 dark:bg-ink/95 backdrop-blur-xl"
       >
-        <ul class="flex flex-col px-5 py-5 gap-3 text-sm font-medium" role="list">
+        <ul class="flex flex-col px-5 py-5 gap-3 text-sm font-medium text-center" role="list">
           <li>
             <a
               href="#services"
@@ -342,6 +345,31 @@
               class="block py-1 hover:text-accent"
               x-text="t('nav.contact')"
             ></a>
+          </li>
+          <li class="pt-3 mt-1 border-t border-ink/10 dark:border-white/10">
+            <div class="lang-switch lang-switch--full" role="group" :aria-label="t('nav.lang')">
+              <template x-for="item in langs" :key="'mm-'+item.id">
+                <button
+                  type="button"
+                  class="lang-opt"
+                  :class="lang===item.id ? 'is-on' : ''"
+                  @click="setLang(item.id)"
+                  :aria-pressed="lang===item.id"
+                  :aria-label="item.label"
+                >
+                  <span
+                    class="lang-flag"
+                    :data-flag="item.id"
+                    aria-hidden="true"
+                  ></span>
+                  <span
+                    class="lang-code"
+                    x-show="lang===item.id"
+                    x-text="item.code"
+                  ></span>
+                </button>
+              </template>
+            </div>
           </li>
         </ul>
       </div>
@@ -380,7 +408,7 @@
               >
                 <a
                   href="#contact"
-                  class="shimmer inline-flex items-center gap-2 bg-accent text-ink px-5 py-3 rounded-xl text-sm font-medium hover:bg-accent-dark hover:text-white transition-colors"
+                  class="shimmer inline-flex items-center gap-2 bg-accent text-white px-5 py-3 rounded-xl text-sm font-medium hover:bg-accent-dark hover:text-white transition-colors"
                   x-text="t('hero.talk')"
                 ></a>
                 <a
@@ -653,7 +681,7 @@
                 <div class="flex flex-wrap gap-3">
                   <button
                     type="button"
-                    class="text-sm font-medium bg-accent text-ink px-4 py-2.5 rounded-xl hover:bg-accent-dark hover:text-white transition-colors"
+                    class="text-sm font-medium bg-accent text-white px-4 py-2.5 rounded-xl hover:bg-accent-dark hover:text-white transition-colors"
                     @click="openCert(diploma())"
                     x-text="t('edu.viewDiploma')"
                   ></button>
@@ -841,7 +869,7 @@
       >
         <button
           type="button"
-          class="absolute top-3 right-3 z-10 w-9 h-9 flex items-center justify-center rounded-xl bg-ink/5 dark:bg-white/10 hover:bg-accent hover:text-ink transition-colors"
+          class="absolute top-3 right-3 z-10 w-9 h-9 flex items-center justify-center rounded-xl bg-ink/5 dark:bg-white/10 hover:bg-accent hover:text-white transition-colors"
           @click="closeCert()"
           aria-label="Close certificate"
         >
@@ -878,6 +906,8 @@
       </div>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="javaScript/particles-config.js"></script>
     <script src="javaScript/lang/en.js"></script>
     <script src="javaScript/lang/kh.js"></script>
     <script src="javaScript/lang/cn.js"></script>
