@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /part/
+
+Sitemap: https://by-kimhy.site/sitemap.xml

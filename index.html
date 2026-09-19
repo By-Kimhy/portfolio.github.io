@@ -3,7 +3,76 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Kimhy — Full Stack Developer</title>
+    <title>Kimhy — Full Stack Developer | by-kimhy.site</title>
+    <meta
+      name="description"
+      content="Portfolio of By Kimhy, a full stack developer and Setec Institute graduate in Cambodia. Building with HTML, CSS, JavaScript, Vue.js, Node.js, and Laravel."
+    />
+    <meta
+      name="keywords"
+      content="By Kimhy, Kimhy, full stack developer, web developer Cambodia, Setec Institute, Vue.js, Node.js, Laravel, JavaScript, portfolio"
+    />
+    <meta name="author" content="By Kimhy" />
+    <meta
+      name="robots"
+      content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+    />
+    <meta name="googlebot" content="index, follow" />
+    <meta name="theme-color" content="#6366f1" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="canonical" href="https://by-kimhy.site/" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="By Kimhy" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:url" content="https://by-kimhy.site/" />
+    <meta
+      property="og:title"
+      content="Kimhy — Full Stack Developer | by-kimhy.site"
+    />
+    <meta
+      property="og:description"
+      content="Portfolio of By Kimhy, a full stack developer and Setec Institute graduate in Cambodia. Open to junior roles, internships, and collaborations."
+    />
+    <meta
+      property="og:image"
+      content="https://by-kimhy.site/img/seo/og-image.jpg"
+    />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="By Kimhy — Full Stack Developer"
+    />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Kimhy — Full Stack Developer | by-kimhy.site"
+    />
+    <meta
+      name="twitter:description"
+      content="Portfolio of By Kimhy, a full stack developer and Setec Institute graduate in Cambodia."
+    />
+    <meta
+      name="twitter:image"
+      content="https://by-kimhy.site/img/seo/og-image.jpg"
+    />
+    <meta
+      name="twitter:image:alt"
+      content="By Kimhy — Full Stack Developer"
+    />
+
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/img/seo/favicon-32.png"
+    />
+    <link rel="apple-touch-icon" href="/img/seo/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script
@@ -17,6 +86,73 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="css/style.css" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": "https://by-kimhy.site/#website",
+            "url": "https://by-kimhy.site/",
+            "name": "By Kimhy",
+            "alternateName": "Kimhy",
+            "description": "Portfolio of By Kimhy, a full stack developer and Setec Institute graduate in Cambodia.",
+            "inLanguage": "en",
+            "publisher": { "@id": "https://by-kimhy.site/#person" }
+          },
+          {
+            "@type": "Person",
+            "@id": "https://by-kimhy.site/#person",
+            "name": "By Kimhy",
+            "alternateName": ["Kimhy", "Kimhy By"],
+            "url": "https://by-kimhy.site/",
+            "image": "https://by-kimhy.site/img/Profile.jpg",
+            "jobTitle": "Full Stack Developer",
+            "description": "Full stack developer and recent Management Information Technology graduate from Setec Institute, focused on modern web technologies.",
+            "email": "mailto:kimhyby99@gmail.com",
+            "alumniOf": [
+              {
+                "@type": "CollegeOrUniversity",
+                "name": "Setec Institute"
+              },
+              {
+                "@type": "EducationalOrganization",
+                "name": "IT Academy STEP Institute Cambodia"
+              }
+            ],
+            "knowsAbout": [
+              "Full Stack Development",
+              "HTML",
+              "CSS",
+              "JavaScript",
+              "Vue.js",
+              "Node.js",
+              "PHP",
+              "Laravel",
+              "Bootstrap",
+              "jQuery",
+              "C++"
+            ],
+            "sameAs": [
+              "https://github.com/By-Kimhy",
+              "https://www.linkedin.com/in/by-kimhy-83a9351aa/",
+              "https://t.me/kimhy0325"
+            ]
+          },
+          {
+            "@type": "ProfilePage",
+            "@id": "https://by-kimhy.site/#webpage",
+            "url": "https://by-kimhy.site/",
+            "name": "Kimhy — Full Stack Developer",
+            "isPartOf": { "@id": "https://by-kimhy.site/#website" },
+            "about": { "@id": "https://by-kimhy.site/#person" },
+            "mainEntity": { "@id": "https://by-kimhy.site/#person" },
+            "inLanguage": "en"
+          }
+        ]
+      }
+    </script>
   </head>
 
   <body
@@ -324,8 +460,11 @@
                 <div class="pf w-full h-full rounded-3xl overflow-hidden">
                   <img
                     src="img/Profile.jpg"
-                    alt="Kimhy — Freelance Full Stack Developer"
+                    alt="By Kimhy, full stack developer based in Cambodia"
+                    width="960"
+                    height="960"
                     loading="eager"
+                    fetchpriority="high"
                     class="w-full h-full object-cover"
                   />
                 </div>
@@ -558,7 +697,10 @@
             <article>
               <img
                 src="img/certificate/setec transcript.jpg"
-                alt="setec certificate"
+                alt="Setec Institute bachelor transcript for By Kimhy in Management Information Technology"
+                width="901"
+                height="1280"
+                loading="lazy"
                 class="cursor-pointer"
                 onclick="openModal('setecModal')"
               />
@@ -599,7 +741,10 @@
             <article>
               <img
                 src="img/certificate/itstep.jpg"
-                alt="IT STEP Certificate"
+                alt="IT Academy STEP Cambodia certificate in Cyber Security Essentials awarded to By Kimhy"
+                width="1280"
+                height="923"
+                loading="lazy"
                 class="cursor-pointer"
                 onclick="openModal('itstepModal')"
               />
@@ -645,7 +790,13 @@
           <div class="grid md:grid-cols-2 gap-16 items-center">
             <div class="reveal order-2 md:order-1">
               <div class="pf w-full aspect-square max-w-sm mx-auto rounded-3xl">
-                <img src="img/Profile.jpg" alt="Kimhy" loading="lazy" />
+                <img
+                  src="img/Profile.jpg"
+                  alt="Portrait of By Kimhy, full stack developer"
+                  width="960"
+                  height="960"
+                  loading="lazy"
+                />
               </div>
             </div>
 
@@ -933,7 +1084,7 @@
                   </a>
                   <a
                     href="https://www.linkedin.com/in/by-kimhy-83a9351aa/"
-                    rel="noopener noreferrer"
+                    rel="me noopener noreferrer"
                     target="_blank"
                     class="group flex items-center gap-3 text-zinc-400 hover:text-white transition-colors"
                   >
@@ -957,7 +1108,7 @@
                   </a>
                   <a
                     href="https://github.com/By-Kimhy"
-                    rel="noopener noreferrer"
+                    rel="me noopener noreferrer"
                     target="_blank"
                     class="group flex items-center gap-3 text-zinc-400 hover:text-white transition-colors"
                   >
@@ -1059,7 +1210,11 @@
               <div class="reveal d2">
                 <div class="flex flex-col items-center gap-4">
                   <!-- Telegram QR Image -->
-                  <a href="https://t.me/kimhy0325" target="_blank">
+                  <a
+                    href="https://t.me/kimhy0325"
+                    rel="me noopener noreferrer"
+                    target="_blank"
+                  >
                     <img
                       src="img/telegram1.jpg"
                       alt="Scan to contact on Telegram"
