@@ -76,6 +76,11 @@ window.LANG_PACKS.en = {
   "footer": {
     "rights": "All rights reserved."
   },
+  "seo": {
+    "title": "Kimhy — Full Stack Developer | by-kimhy.site",
+    "description": "Portfolio of By Kimhy, a full stack developer and SETEC Institute graduate in Cambodia. Building with HTML, CSS, JavaScript, Vue.js, React, Node.js, and Laravel.",
+    "og": "Portfolio of By Kimhy, a full stack developer and SETEC Institute graduate in Cambodia. Open to junior developer roles, internships, and collaborations."
+  },
   "certs": {
     "step": {
       "title": "Cyber Security Essentials",

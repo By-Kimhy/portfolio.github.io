@@ -76,6 +76,11 @@ window.LANG_PACKS.cn = {
   "footer": {
     "rights": "版权所有。"
   },
+  "seo": {
+    "title": "Kimhy — 全栈开发者 | by-kimhy.site",
+    "description": "By Kimhy 的作品集，柬埔寨 SETEC 学院毕业的全栈开发者。使用 HTML、CSS、JavaScript、Vue.js、React、Node.js 和 Laravel 构建网站。",
+    "og": "By Kimhy 的作品集，柬埔寨 SETEC 学院毕业的全栈开发者。欢迎初级开发岗位、实习与合作。"
+  },
   "certs": {
     "step": {
       "title": "网络安全基础",

@@ -59,6 +59,56 @@ function app() {
       return { en: "en", kh: "km", cn: "zh-CN" }[this.lang] || "en";
     },
 
+    seoUrl(code) {
+      const origin = "https://by-kimhy.site/";
+      return code === "en" ? origin : origin + "?lang=" + code;
+    },
+
+    setMeta(selector, value) {
+      const el = document.querySelector(selector);
+      if (el && value) el.setAttribute("content", value);
+    },
+
+    applySeo() {
+      const pack = this.dict.seo || window.LANG_PACKS?.en?.seo || {};
+      const title = pack.title || document.title;
+      const desc = pack.description || "";
+      const og = pack.og || desc;
+      const locale = { en: "en_US", kh: "km_KH", cn: "zh_CN" }[this.lang] || "en_US";
+      const url = this.seoUrl(this.lang);
+      const htmlLang = this.htmlLang();
+
+      document.title = title;
+      this.setMeta('meta[name="description"]', desc);
+      this.setMeta('meta[property="og:title"]', title);
+      this.setMeta('meta[property="og:description"]', og);
+      this.setMeta('meta[property="og:url"]', url);
+      this.setMeta('meta[property="og:locale"]', locale);
+      this.setMeta('meta[name="twitter:title"]', title);
+      this.setMeta('meta[name="twitter:description"]', desc);
+
+      const canonical = document.querySelector('link[rel="canonical"]');
+      if (canonical) canonical.setAttribute("href", url);
+
+      const ld = document.getElementById("ld-json");
+      if (!ld) return;
+      try {
+        const data = JSON.parse(ld.textContent);
+        (data["@graph"] || []).forEach((node) => {
+          if (node["@type"] === "WebSite") {
+            node.inLanguage = htmlLang;
+            node.description = desc;
+          }
+          if (node["@type"] === "ProfilePage") {
+            node.inLanguage = htmlLang;
+            node.url = url;
+            node.name = title.replace(" | by-kimhy.site", "");
+          }
+        });
+        ld.textContent = JSON.stringify(data);
+      } catch (_) {}
+    },
+
     buildCerts() {
       const pack = this.dict.certs || {};
       const fallback = window.LANG_PACKS?.en?.certs || {};
@@ -112,6 +162,7 @@ function app() {
       document.documentElement.lang = this.htmlLang();
       document.documentElement.dataset.lang = code;
       this.certs = this.buildCerts();
+      this.applySeo();
       const url = new URL(location.href);
       if (code === "en") url.searchParams.delete("lang");
       else url.searchParams.set("lang", code);
