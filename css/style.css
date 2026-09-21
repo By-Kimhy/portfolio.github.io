@@ -142,10 +142,10 @@ html[lang="zh"] h1,html[lang="zh"] h2,html[lang="zh"] h3,html[lang="zh"] h4,html
 .lang-opt:not(.is-on) .lang-flag{
   opacity:.85;
 }
-.lang-flag[data-flag="en"]{background-image:url("../img/flags/en.svg")}
+.lang-flag[data-flag="en"]{background-image:url("../img/flags/en.png")}
 .lang-flag[data-flag="kh"],
 .lang-flag[data-flag="km"]{background-image:url("../img/flags/kh.png")}
 .lang-flag[data-flag="cn"],
-.lang-flag[data-flag="zh"]{background-image:url("../img/flags/cn.svg")}
+.lang-flag[data-flag="zh"]{background-image:url("../img/flags/cn.png")}
 
 [x-cloak]{display:none!important}
