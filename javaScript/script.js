@@ -35,7 +35,10 @@ const CERT_FILES = [
 
 function app() {
   return {
-    dark: false,
+    dark:
+      localStorage.getItem("theme") === "dark" ||
+      (!localStorage.getItem("theme") &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches),
     mm: false,
     sc: false,
     s: "hero",
@@ -177,6 +180,28 @@ function app() {
       this.cert = null;
     },
 
+    dismissSkeleton() {
+      const sk = document.getElementById("page-skeleton");
+      const done = () => {
+        document.documentElement.classList.remove("is-loading");
+        if (sk) {
+          sk.setAttribute("aria-busy", "false");
+          sk.remove();
+        }
+      };
+      if (!sk) {
+        done();
+        return;
+      }
+      sk.classList.add("is-done");
+      const finish = () => {
+        sk.removeEventListener("transitionend", finish);
+        done();
+      };
+      sk.addEventListener("transitionend", finish);
+      window.setTimeout(finish, 500);
+    },
+
     async init() {
       const aliases = { km: "kh", zh: "cn", "zh-cn": "cn" };
       const query = new URLSearchParams(location.search).get("lang");
@@ -190,11 +215,6 @@ function app() {
             : "en";
       await this.setLang(start);
 
-      // dark mode
-      this.dark =
-        localStorage.getItem("theme") === "dark" ||
-        (!localStorage.getItem("theme") &&
-          window.matchMedia("(prefers-color-scheme: dark)").matches);
       this.$watch("dark", (v) => {
         localStorage.setItem("theme", v ? "dark" : "light");
         startParticles(v);
@@ -240,6 +260,8 @@ function app() {
       // year
       document.getElementById("yr").textContent =
         new Date().getFullYear();
+
+      this.$nextTick(() => this.dismissSkeleton());
     },
 
     updateSection() {

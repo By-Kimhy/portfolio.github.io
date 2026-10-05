@@ -92,6 +92,16 @@
     <link rel="alternate" hreflang="zh-CN" href="https://by-kimhy.site/?lang=cn" />
     <link rel="alternate" hreflang="x-default" href="https://by-kimhy.site/" />
     <link rel="stylesheet" href="css/style.css" />
+    <script>
+      (function () {
+        document.documentElement.classList.add("is-loading");
+        var theme = localStorage.getItem("theme");
+        var dark =
+          theme === "dark" ||
+          (!theme && window.matchMedia("(prefers-color-scheme: dark)").matches);
+        if (dark) document.documentElement.classList.add("dark");
+      })();
+    </script>
 
     <script id="ld-json" type="application/ld+json">
       {
@@ -166,6 +176,66 @@
   <body
     class="bg-paper dark:bg-ink text-ink dark:text-paper antialiased relative"
   >
+    <div
+      id="page-skeleton"
+      role="status"
+      aria-live="polite"
+      aria-busy="true"
+      aria-label="Loading portfolio"
+    >
+      <div class="sk-wrap">
+        <div class="sk-nav" aria-hidden="true">
+          <span class="sk-bone sk-logo"></span>
+          <div class="sk-nav-links">
+            <span class="sk-bone sk-nav-link"></span>
+            <span class="sk-bone sk-nav-link"></span>
+            <span class="sk-bone sk-nav-link"></span>
+          </div>
+          <div class="sk-nav-actions">
+            <span class="sk-bone sk-chip"></span>
+            <span class="sk-bone sk-icon"></span>
+            <span class="sk-bone sk-btn"></span>
+          </div>
+        </div>
+
+        <div class="sk-hero" aria-hidden="true">
+          <div class="sk-copy">
+            <span class="sk-bone sk-kicker"></span>
+            <span class="sk-bone sk-title"></span>
+            <span class="sk-bone sk-title-sm"></span>
+            <span class="sk-bone sk-lead"></span>
+            <span class="sk-bone sk-lead-sm"></span>
+            <div class="sk-ctas">
+              <span class="sk-bone sk-cta"></span>
+              <span class="sk-bone sk-cta-ghost"></span>
+            </div>
+            <div class="sk-stats">
+              <div>
+                <span class="sk-bone sk-stat"></span>
+                <span class="sk-bone sk-stat-sub"></span>
+              </div>
+              <div>
+                <span class="sk-bone sk-stat"></span>
+                <span class="sk-bone sk-stat-sub"></span>
+              </div>
+              <div>
+                <span class="sk-bone sk-stat"></span>
+                <span class="sk-bone sk-stat-sub"></span>
+              </div>
+            </div>
+          </div>
+          <div class="sk-photo">
+            <div class="sk-frame">
+              <div class="sk-ring"></div>
+              <div class="sk-img"></div>
+              <div class="sk-badge"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <span class="sk-sr">Loading…</span>
+    </div>
+
     <div id="particles-js" aria-hidden="true"></div>
     <header class="fixed inset-x-0 top-0 z-50 px-4 pt-4">
       <nav
@@ -916,5 +986,16 @@
     <script src="javaScript/lang/kh.js"></script>
     <script src="javaScript/lang/cn.js"></script>
     <script src="javaScript/script.js"></script>
+    <script>
+      window.setTimeout(function () {
+        var sk = document.getElementById("page-skeleton");
+        if (!sk || sk.classList.contains("is-done")) return;
+        sk.classList.add("is-done");
+        document.documentElement.classList.remove("is-loading");
+        window.setTimeout(function () {
+          sk.remove();
+        }, 500);
+      }, 4000);
+    </script>
   </body>
 </html>
