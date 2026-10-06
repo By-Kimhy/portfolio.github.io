@@ -19,18 +19,24 @@ tailwind.config = {
 }
 
 const LANG_FILES = {
-  en: "javaScript/lang/en.js",
-  kh: "javaScript/lang/kh.js",
-  cn: "javaScript/lang/cn.js",
+  en: "/javaScript/lang/en.js",
+  kh: "/javaScript/lang/kh.js",
+  cn: "/javaScript/lang/cn.js",
+};
+
+const LANG_PATHS = {
+  en: "/",
+  kh: "/kh/",
+  cn: "/cn/",
 };
 
 const CERT_FILES = [
-  { id: "step", src: "img/certificate/itstep.jpg", year: "2025" },
-  { id: "intro", src: "img/certificate/intro%20cyber.jpg", year: "2025" },
-  { id: "threat", src: "img/certificate/cyber%20threat%20management.jpg", year: "2025" },
-  { id: "endpoint", src: "img/certificate/end%20point.jpg", year: "2025" },
-  { id: "hsk", src: "img/certificate/hsk6.jpg", year: "2020" },
-  { id: "samsung", src: "img/certificate/samsung.jpg", year: "2016" },
+  { id: "step", src: "/img/certificate/itstep.jpg", year: "2025" },
+  { id: "intro", src: "/img/certificate/intro%20cyber.jpg", year: "2025" },
+  { id: "threat", src: "/img/certificate/cyber%20threat%20management.jpg", year: "2025" },
+  { id: "endpoint", src: "/img/certificate/end%20point.jpg", year: "2025" },
+  { id: "hsk", src: "/img/certificate/hsk6.jpg", year: "2020" },
+  { id: "samsung", src: "/img/certificate/samsung.jpg", year: "2016" },
 ];
 
 function app() {
@@ -63,8 +69,14 @@ function app() {
     },
 
     seoUrl(code) {
-      const origin = "https://by-kimhy.site/";
-      return code === "en" ? origin : origin + "?lang=" + code;
+      return "https://by-kimhy.site" + (LANG_PATHS[code] || "/");
+    },
+
+    langFromPath() {
+      const p = (location.pathname || "/").replace(/\/+$/, "") || "/";
+      if (p === "/kh") return "kh";
+      if (p === "/cn") return "cn";
+      return null;
     },
 
     setMeta(selector, value) {
@@ -80,6 +92,7 @@ function app() {
       const locale = { en: "en_US", kh: "km_KH", cn: "zh_CN" }[this.lang] || "en_US";
       const url = this.seoUrl(this.lang);
       const htmlLang = this.htmlLang();
+      const ogImage = "https://by-kimhy.site/img/seo/og-image.jpg?v=2";
 
       document.title = title;
       this.setMeta('meta[name="description"]', desc);
@@ -87,11 +100,16 @@ function app() {
       this.setMeta('meta[property="og:description"]', og);
       this.setMeta('meta[property="og:url"]', url);
       this.setMeta('meta[property="og:locale"]', locale);
+      this.setMeta('meta[property="og:image"]', ogImage);
+      this.setMeta('meta[property="og:image:secure_url"]', ogImage);
       this.setMeta('meta[name="twitter:title"]', title);
       this.setMeta('meta[name="twitter:description"]', desc);
+      this.setMeta('meta[name="twitter:image"]', ogImage);
 
       const canonical = document.querySelector('link[rel="canonical"]');
       if (canonical) canonical.setAttribute("href", url);
+      const imageSrc = document.querySelector('link[rel="image_src"]');
+      if (imageSrc) imageSrc.setAttribute("href", ogImage);
 
       const ld = document.getElementById("ld-json");
       if (!ld) return;
@@ -140,7 +158,7 @@ function app() {
         title: this.t("edu.bachelor"),
         issuer: "SETEC Institute",
         year: "2025",
-        src: "img/certificate/it bachelor.jpg",
+        src: "/img/certificate/it bachelor.jpg",
         alt: this.t("edu.diplomaAlt"),
       };
     },
@@ -150,13 +168,24 @@ function app() {
         title: this.t("edu.viewTranscript"),
         issuer: "SETEC Institute",
         year: "2025",
-        src: "img/certificate/setec transcript.jpg",
+        src: "/img/certificate/setec transcript.jpg",
         alt: this.t("edu.transcriptAlt"),
       };
     },
 
-    async setLang(code) {
+    async setLang(code, { navigate = true } = {}) {
       if (!LANG_FILES[code]) return;
+
+      const targetPath = LANG_PATHS[code] || "/";
+      const currentPath = location.pathname.endsWith("/")
+        ? location.pathname
+        : location.pathname + "/";
+      if (navigate && currentPath !== targetPath) {
+        localStorage.setItem("lang", code);
+        location.assign(targetPath);
+        return;
+      }
+
       const pack = await this.loadLang(code);
       if (!pack) return;
       this.lang = code;
@@ -166,10 +195,10 @@ function app() {
       document.documentElement.dataset.lang = code;
       this.certs = this.buildCerts();
       this.applySeo();
+
       const url = new URL(location.href);
-      if (code === "en") url.searchParams.delete("lang");
-      else url.searchParams.set("lang", code);
-      history.replaceState(null, "", url);
+      url.searchParams.delete("lang");
+      history.replaceState(null, "", url.pathname + url.search + url.hash);
     },
 
     openCert(cert) {
@@ -204,16 +233,29 @@ function app() {
 
     async init() {
       const aliases = { km: "kh", zh: "cn", "zh-cn": "cn" };
-      const query = new URLSearchParams(location.search).get("lang");
+      const fromPath = this.langFromPath();
+      const queryRaw = new URLSearchParams(location.search).get("lang");
+      const query = LANG_FILES[queryRaw]
+        ? queryRaw
+        : LANG_FILES[aliases[queryRaw]]
+          ? aliases[queryRaw]
+          : null;
+
+      // Old ?lang= links → path pages so crawlers get baked-in OG tags
+      if (!fromPath && query) {
+        location.replace(LANG_PATHS[query]);
+        return;
+      }
+
       const saved = localStorage.getItem("lang");
-      const start = LANG_FILES[query]
-        ? query
-        : LANG_FILES[aliases[query]]
-          ? aliases[query]
-          : LANG_FILES[saved]
-            ? saved
-            : "en";
-      await this.setLang(start);
+      // Keep UI language and shareable URL in sync (OG is baked per path)
+      if (!fromPath && saved && LANG_FILES[saved] && saved !== "en") {
+        location.replace(LANG_PATHS[saved]);
+        return;
+      }
+
+      const start = fromPath || "en";
+      await this.setLang(start, { navigate: false });
 
       this.$watch("dark", (v) => {
         localStorage.setItem("theme", v ? "dark" : "light");
