@@ -38,6 +38,45 @@
         }
     });
 
+    // Blur the page when it loses focus or a screenshot shortcut starts,
+    // so screenshot tools (Snipping Tool, Win+Shift+S, Cmd+Shift+3/4/5) capture a blurred page
+    var blurStyle = document.createElement('style');
+    blurStyle.textContent =
+        'html.protect-blur body { filter: blur(25px); }';
+    document.head.appendChild(blurStyle);
+
+    var unblurTimer;
+    function blurPage() {
+        clearTimeout(unblurTimer);
+        document.documentElement.classList.add('protect-blur');
+    }
+    function unblurPage(delay) {
+        clearTimeout(unblurTimer);
+        unblurTimer = setTimeout(function () {
+            if (document.hasFocus()) document.documentElement.classList.remove('protect-blur');
+        }, delay || 0);
+    }
+
+    window.addEventListener('blur', function () {
+        // Clicking into an embedded video or map also moves focus away; don't blur for that
+        setTimeout(function () {
+            if (!(document.activeElement && document.activeElement.tagName === 'IFRAME')) blurPage();
+        }, 0);
+    });
+    window.addEventListener('focus', function () {
+        unblurPage(300);
+    });
+    document.addEventListener('visibilitychange', function () {
+        if (document.hidden) blurPage();
+        else unblurPage(300);
+    });
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'PrintScreen' || (e.metaKey && e.shiftKey)) blurPage();
+    });
+    document.addEventListener('keyup', function (e) {
+        if (e.key === 'PrintScreen' || e.key === 'Meta' || e.key === 'Shift') unblurPage(1500);
+    });
+
     // Block printing and "Save as PDF"
     window.addEventListener('beforeprint', function () {
         document.body.style.display = 'none';
